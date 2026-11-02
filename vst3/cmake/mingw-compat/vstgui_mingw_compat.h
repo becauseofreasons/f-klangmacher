@@ -1,7 +1,7 @@
 // Forced include for building VSTGUI (Steinberg VST3 SDK) with MinGW-w64. The SDK stays unchanged.
 // - std::wstring_convert lives in <codecvt>/<locale> (MSVC includes them implicitly)
 // - IDCompositionVisual3 is missing in the MinGW DirectComposition header (only used by VSTGUI for the
-//   opacity of animated layers, which Tirakon does not use). Declared like MinGW declares the other
+//   opacity of animated layers, which this plugin does not use). Declared like MinGW declares the other
 //   DirectComposition interfaces: overloads in MSVC vtable order (animation variant first).
 #pragma once
 #ifdef __cplusplus

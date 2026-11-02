@@ -1,5 +1,6 @@
 // Linux only: VSTGUI's X11 frame needs the host's run loop (Steinberg::Linux::IRunLoop from the IPlugFrame).
 // Same adapter as in VSTGUI's vst3editor.cpp, which is not used here.
+// Adapted from VSTGUI (c) Steinberg Media Technologies, BSD license: see THIRD-PARTY-NOTICES.md.
 #pragma once
 #if SMTG_OS_LINUX
 #include "vstgui/lib/vstguibase.h"

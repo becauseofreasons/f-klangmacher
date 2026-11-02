@@ -1,25 +1,26 @@
 # F. Klangmacher – VST3-Instrument von BecauseOfReasons
 
 Schaltungsnahe Emulation eines analogen Kombi-Keyboards von 1979 (Poli, Strings, Mono-Synthesizer), gebaut direkt
-auf dem Steinberg VST3 SDK (ohne JUCE) mit eigener VSTGUI-Oberfläche im 70er-Stil. Grundlage des Klangmodells ist
-das Service-Manual des Originalinstruments (in `../res/`, nur zur Entwicklung, siehe „Rechtliches“):
-Schaltpläne, Funktionsbeschreibung, Abgleichanweisungen und die 40 Registrierungen.
+auf dem Steinberg VST3 SDK (ohne JUCE) mit eigener VSTGUI-Oberfläche im 70er-Stil. Grundlage des Klangmodells sind
+die Schaltpläne, die Funktionsbeschreibung und die Abgleichanweisungen des Originalinstruments.
 
 ![Panel](docs/panel.png)
 
 ## Installieren
 
+Fertige Plugins gibt es unter **Releases** auf GitHub.
+
 | System | Datei | Ziel |
 |---|---|---|
-| Windows 64 Bit (Ableton & Co.) | `dist/FKlangmacher.vst3` (ganzer Ordner) | `C:\Program Files\Common Files\VST3\` |
+| Windows 64 Bit | `FKlangmacher.vst3` aus dem Windows-ZIP (ganzer Ordner) | `C:\Program Files\Common Files\VST3\` |
 | Windows 32 Bit (alte DAWs) | derselbe Ordner | `C:\Program Files (x86)\Common Files\VST3\` (32-Bit-Host auf 64-Bit-Windows) bzw. `C:\Program Files\Common Files\VST3\` (32-Bit-Windows) |
-| Linux 64 Bit | `dist/linux/FKlangmacher.vst3` | `~/.vst3/` |
+| Linux 64 Bit | `FKlangmacher.vst3` aus dem Linux-ZIP | `~/.vst3/` |
 | macOS | wird auf einem Mac gebaut, siehe „macOS bauen“ | `~/Library/Audio/Plug-Ins/VST3/` |
 
 Der Windows-Ordner enthält beide Varianten (`Contents/x86_64-win` und `Contents/x86-win`); jeder Host nimmt sich die
 passende.
 
-Ableton vorher schließen (oder Plugins neu scannen). Das Plugin erscheint als Instrument „F. Klangmacher“
+Die DAW vorher schließen (oder Plugins neu scannen). Das Plugin erscheint als Instrument „F. Klangmacher“
 (Hersteller BecauseOfReasons).
 
 ## Was es kann
@@ -30,10 +31,11 @@ Ableton vorher schließen (oder Plugins neu scannen). Das Plugin erscheint als I
   (44 Parameter plus Registrierungswahl).
 * **Größe 75 / 100 / 150 / 200 %**: Klick auf das Display im Namensschild oder Rechtsklick
   irgendwo aufs Panel → „Größe …“. Die Größe wird mit dem Projekt gespeichert und gilt zugleich als Vorgabe für neue
-  Instanzen (`%APPDATA%\FKlangmacher\settings.txt` bzw. `~/.config/FKlangmacher/settings.txt`). Die Windows-
+  Instanzen (`%APPDATA%\FKlangmacher\settings.txt`, `~/Library/Application Support/FKlangmacher/settings.txt` bzw.
+  `~/.config/FKlangmacher/settings.txt`). Die Windows-
   Anzeigeskalierung (HiDPI) kommt vom Host dazu. Bei 100 % ist das Fenster 1600 × 348 Pixel groß.
 * **Zustand** wird mit dem Projekt gespeichert (alle Parameter, Registrierung, Gerätenummer).
-* **40 Werksregistrierungen** aus dem Manual als Programmliste. Wahl über die DAW oder durch Klick auf das Display
+* **40 Werksregistrierungen** als Programmliste. Wahl über die DAW oder durch Klick auf das Display
   im Namensschild; dort auch Gerätewahl und Ausgangsmodus.
 * **Ausgang** wie die Buchsen des Originals: links Poli + Strings, rechts Mono. Umschaltbar auf Mono-Summe.
 * **E.F.T.-Eingang** (Envelope Follower Trigger) als Sidechain-Eingang „E.F.T. In“. Schalter ENV TRIGGER:
@@ -60,7 +62,7 @@ erst mit dem zweiten Druckpunkt (Aftertouch oder Modrad).
 
 ## Wie das Klangmodell aufgebaut ist
 
-Alle Werte stammen aus den Schaltplänen; die Auswertungen liegen in `docs/schaltungsanalyse/` (A–D).
+Alle Werte stammen aus den Schaltplänen (Bauteilwerte, Zeitkonstanten, Schaltlogik).
 
 **Poli** (`src/core/poly.cpp`)
 * 2-MHz-Takt → TOS AY-1-0212 (echte Teiler 478 … 902) → binäre Teiler, phasenstarr wie im Gerät.
@@ -89,7 +91,7 @@ Alle Werte stammen aus den Schaltplänen; die Auswertungen liegen in `docs/schal
   lineare Tastaturverfolgung über VK. VCA linear (Diodenvorverzerrung) mit exponentiellem Treiber.
 * LFO 0,3–83 Hz mit Ein-/Ausblendschaltung, Betriebsarten Adsr / Release / Attack / Continuous.
 
-## Annahmen (nicht im Manual, bewusst gewählt)
+## Annahmen (nicht in den Unterlagen, bewusst gewählt)
 
 | Punkt | Wahl | Grund |
 |---|---|---|
@@ -175,8 +177,8 @@ Die Registrierungen werden aus `tools/registrations.json` erzeugt: `python3 vst3
 
 Stand der Prüfung: alle Tests grün unter Linux; unter Wine Kern-Test und Validator für Windows 64 und 32 Bit
 grün, Editorfenster unter Linux und Wine (64 und 32 Bit) geöffnet und abfotografiert, Größenwechsel im offenen
-Fenster unter Linux geprüft. macOS: nicht übersetzt (kein Mac vorhanden). Rechenzeit ≈ 8 % eines Kerns mit 12 gehaltenen Tasten (Strings + Piano + Mono).
-**Nicht geprüft:** Klang gegen ein echtes Gerät (keine Aufnahmen vorhanden) und Betrieb in Ableton selbst.
+Fenster unter Linux geprüft; in Ableton Live unter Windows getestet. macOS: noch nicht übersetzt. Rechenzeit ≈ 8 % eines Kerns mit 12 gehaltenen Tasten (Strings + Piano + Mono).
+**Nicht geprüft:** Klang gegen ein echtes Gerät (keine Aufnahmen vorhanden).
 
 ## Aufbau
 
@@ -187,16 +189,15 @@ Fenster unter Linux geprüft. macOS: nicht übersetzt (kein Mac vorhanden). Rech
 | `src/gui/` | Panel in VSTGUI, nur über `PanelHost` mit dem Plugin verbunden |
 | `test/` | Kern-Test, Host-Test, Oberflächen-Bild |
 | `tools/` | Registrierungen (JSON) und Generator |
-| `docs/schaltungsanalyse/` | Auswertung der Schaltpläne (Bauteilwerte, Zeitkonstanten, Schaltlogik) |
+| `docs/` | Bild des Panels |
 
-## Rechtliches (Stand der Umsetzung, keine Rechtsberatung)
+## Lizenz
 
-* Plugin und Oberfläche verwenden **keine Namen, Logos oder Grafiken des Originalherstellers**. Name, Emblem,
-  Farben, Skalen und Kachel-Gestaltung sind eigene Entwürfe; die Binärdateien enthalten keinen Hinweis auf das
-  Original. Übernommen sind nur die Anordnung der Bedienelemente nach ihrer Funktion und allgemeine
-  Funktionsbezeichnungen (VCF, ADSR, PIANO, TRUMPET …).
-* Die 40 Registrierungen sind Einstellwerte mit beschreibenden Namen („Piano“, „Split Keyboard 2“ …).
-* **Nicht weitergeben:** `../res/` (Service-Manual und Fotos sind urheberrechtlich geschützt) und
-  `docs/schaltungsanalyse/` (nennt das Original). Zum Weitergeben ist nur der Ordner `dist/FKlangmacher.vst3`
-  gedacht.
+F. Klangmacher steht unter der **MIT-Lizenz** (siehe [LICENSE](../LICENSE)). Das Plugin nutzt das Steinberg VST3 SDK
+(MIT-Lizenz) und VSTGUI (BSD-Lizenz); deren Lizenztexte stehen in
+[THIRD-PARTY-NOTICES.md](../THIRD-PARTY-NOTICES.md) und liegen den fertigen Plugins bei.
 
+F. Klangmacher ist ein eigenständiges Projekt und steht in keiner Verbindung zum Hersteller des Originalinstruments.
+Name, Emblem und Panel-Gestaltung sind eigene Entwürfe.
+
+VST is a registered trademark of Steinberg Media Technologies GmbH.

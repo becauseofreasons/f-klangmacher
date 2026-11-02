@@ -39,3 +39,11 @@ F. Klangmacher ist ein Kombi-Keyboard aus drei Instrumenten, die gleichzeitig sp
 
 * Fertige Plugins für Windows (32/64 Bit) und Linux: unter **[Releases](../../releases)**
 * macOS, Bauen aus dem Quellcode und Tests: [vst3/README.md](vst3/README.md)
+
+### Lizenz
+
+MIT-Lizenz, siehe [LICENSE](LICENSE). Verwendeter Fremdcode (Steinberg VST3 SDK, VSTGUI) und dessen Lizenzen:
+[THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+
+F. Klangmacher ist ein eigenständiges Projekt und steht in keiner Verbindung zum Hersteller des Originalinstruments.
+VST is a registered trademark of Steinberg Media Technologies GmbH.
