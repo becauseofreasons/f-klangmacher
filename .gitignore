@@ -1,0 +1,12 @@
+# Nicht ins Repository:
+# - Service-Manual und Fotos des Originals (urheberrechtlich geschützt)
+res/
+# - fremdes Beispielprojekt
+example_emu/
+# - Schaltungsanalysen (nennen das Originalinstrument)
+vst3/docs/schaltungsanalyse/
+# - fertige Plugins (kommen als GitHub-Release)
+vst3/dist/
+# Build-Ordner, falls jemand im Projekt baut
+build*/
+.DS_Store

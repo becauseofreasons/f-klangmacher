@@ -1,0 +1,4 @@
+# fertige Plugins (über die Dropbox verteilt, nicht in Git)
+dist/
+compare_js.txt
+compare_cpp.txt
